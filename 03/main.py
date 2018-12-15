@@ -61,6 +61,13 @@ def contested_claims(claim_map):
     return contested_claims
 
 
+def uncontested_claims(claims, claim_map):
+    possibly_uncontested = set([claim.claim_id for claim in claims])
+    for coordinate, claims in claim_map.items():
+        if len(claims) > 1:
+            possibly_uncontested = possibly_uncontested - set(claims)
+    return possibly_uncontested
+
 
 def main():
     parser = argparse.ArgumentParser()
@@ -74,6 +81,9 @@ def main():
 
     claim_map = map_claims(claims)
     print(len(contested_claims(claim_map)))
+    uncontested_claim_ids = uncontested_claims(claims, claim_map)
+    assert len(uncontested_claim_ids) == 1
+    print(list(uncontested_claim_ids)[0])
 
 
 if __name__ == '__main__':
