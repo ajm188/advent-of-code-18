@@ -61,8 +61,19 @@ def main():
         if times_asleep > times_asleep_in_worst_minute:
             times_asleep_in_worst_minute = times_asleep
             worst_minute = minute
-
     print(worst_guard * worst_minute)
+
+    strat2_worst_guard = None
+    most_frequent_naptime = None
+    most_frequent_naptime_count = 0
+    for guard, minutes_asleep in minutes_per_guard.items():
+        for minute, times_asleep in minutes_asleep.items():
+            if times_asleep > most_frequent_naptime_count:
+                most_frequent_naptime_count = times_asleep
+                most_frequent_naptime = minute
+                strat2_worst_guard = guard
+
+    print(strat2_worst_guard * most_frequent_naptime)
 
 
 if __name__ == '__main__':
